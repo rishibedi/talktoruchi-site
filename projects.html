@@ -769,11 +769,37 @@ function buildPanelBody(p, showForm) {
       return;
     }
 
-    // TODO: wire this to n8n webhook → FUB
-    console.log('Lead:', { first, last, email, phone, project: p.slug });
+    // Disable button and show loading state
+    const btn = body.querySelector('#leadSubmit');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
 
-    body.querySelector('#leadForm').style.display = 'none';
-    body.querySelector('#chatSuccess').classList.add('show');
+    // POST to n8n → FUB
+    fetch('https://automation.talktoruchi.ca/webhook/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: first,
+        lastName: last,
+        email: email,
+        phone: phone,
+        source: 'website',
+        project: p.slug,
+        message: `Interested in ${p.name} (${p.city}) via talktoruchi.ca/projects`,
+        consent: true,
+        consent_version: 'v1'
+      })
+    })
+    .then(res => {
+      body.querySelector('#leadForm').style.display = 'none';
+      body.querySelector('#chatSuccess').classList.add('show');
+    })
+    .catch(err => {
+      // Still show success to user even if network error — don't block UX
+      body.querySelector('#leadForm').style.display = 'none';
+      body.querySelector('#chatSuccess').classList.add('show');
+      console.error('Lead submission error:', err);
+    });
   });
 }
 
