@@ -526,7 +526,7 @@ let activeProject = null;
 // ── FETCH PROJECTS ────────────────────────────────────────────
 async function loadProjects() {
   try {
-    const res = await fetch('projects.json');
+    const res = await fetch('/projects.json');
     const data = await res.json();
     allProjects = data.projects;
     renderGrid(allProjects);
@@ -754,6 +754,7 @@ function buildPanelBody(p, showForm) {
       <a href="tel:4169103726" style="color:var(--gold)">416-910-3726</a> &middot;
       <a href="mailto:ruchi@ruchibedi.com" style="color:var(--gold)">ruchi@ruchibedi.com</a>
     </div>
+  `;
 
   // Form submission
   body.querySelector('#leadSubmit')?.addEventListener('click', () => {
