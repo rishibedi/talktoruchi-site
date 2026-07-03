@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01",
+  "updated": "2026-07-03",
   "projects": [
     {
       "slug": "reva-westfield",
@@ -17,7 +17,10 @@
       "sqft_from": 1940,
       "sqft_to": 2275,
       "bedrooms": "3–4",
-      "incentives": ["5 Appliances + A/C included", "$7,500 Décor Credit"],
+      "incentives": [
+        "5 Appliances + A/C included",
+        "$7,500 Décor Credit"
+      ],
       "common_fees_from": 150.75,
       "phase": "Phase 1",
       "vip_available": true,
@@ -27,7 +30,12 @@
       "sales_email": "westfield.sales@greatgulf.com",
       "sales_phone": "905-866-6876",
       "office_hours": "Mon–Thu 12–6PM · Sat–Sun 12–5PM · Fri/Hol Closed",
-      "tags": ["Townhomes", "Freehold", "Brampton", "Great Gulf"]
+      "tags": [
+        "Townhomes",
+        "Freehold",
+        "Brampton",
+        "Great Gulf"
+      ]
     },
     {
       "slug": "bayview-heights",
@@ -55,7 +63,43 @@
       "sales_email": null,
       "sales_phone": "416-845-3318",
       "office_hours": "TBA",
-      "tags": ["Townhomes", "Freehold", "Richmond Hill", "Royal Pine"]
+      "tags": [
+        "Townhomes",
+        "Freehold",
+        "Richmond Hill",
+        "Royal Pine"
+      ]
+    },
+    {
+      "slug": "royal-pine-bayview-heights-20-towns",
+      "name": "Royal Pine Bayview Heights - 20’ Towns",
+      "subtitle": "New Development",
+      "builder": "Not specified (Royal Pine might be part of the builder name, but it's not explicit)",
+      "address": "Bayview Heights (specific address not provided)",
+      "city": "GTA",
+      "region": "GTA",
+      "status": "coming_soon",
+      "price_from": "TBA",
+      "price_to": null,
+      "deposit": "TBA",
+      "deposit_note": null,
+      "sqft_from": null,
+      "sqft_to": null,
+      "bedrooms": "TBA",
+      "incentives": [],
+      "common_fees_from": null,
+      "phase": "Coming Soon (Inferred from \"Date Started: AUG. 23, 2024\")",
+      "vip_available": true,
+      "dify_kb_id": null,
+      "lifecycle_stage": 1,
+      "sales_contact": null,
+      "sales_email": null,
+      "sales_phone": null,
+      "office_hours": "Not specified",
+      "tags": [
+        "Not specified (Royal Pine might be part of the builder name, but it's not explicit)",
+        "GTA"
+      ]
     }
   ]
 }
