@@ -338,6 +338,93 @@
     flex: 1; overflow-y: auto; padding: 24px;
     display: flex; flex-direction: column; gap: 24px;
   }
+  .panel-body.chat-mode {
+    padding: 0; overflow: hidden;
+  }
+
+  /* ── CUSTOM CHAT UI ── */
+  .chat-container {
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .chat-messages {
+    flex: 1; overflow-y: auto; min-height: 0;
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .chat-welcome {
+    text-align: center; padding: 32px 16px;
+    color: rgba(238,233,223,0.6); font-size: 13px; line-height: 1.6;
+  }
+  .chat-welcome-icon { font-size: 32px; display: block; margin-bottom: 12px; }
+  .chat-welcome strong { color: var(--text); }
+  .chat-message {
+    display: flex; gap: 8px;
+    animation: msgIn 0.18s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .chat-message.user { flex-direction: row-reverse; }
+  .message-bubble {
+    max-width: 82%; padding: 10px 14px;
+    font-size: 13px; line-height: 1.55; word-break: break-word;
+  }
+  .chat-message.user .message-bubble {
+    background: var(--gold); color: #07090F;
+    border-radius: 12px 12px 2px 12px;
+  }
+  .chat-message.assistant .message-bubble {
+    background: var(--bg-card); color: var(--text);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px 12px 12px 2px;
+  }
+  .message-bubble.typing {
+    display: flex; gap: 5px; align-items: center; padding: 14px;
+  }
+  .typing-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--text-muted);
+    animation: typingBounce 1.1s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.18s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+  }
+  .chat-input-area {
+    border-top: 1px solid var(--gold-border);
+    padding: 12px 16px;
+    display: flex; gap: 8px; align-items: flex-end;
+    background: var(--bg-panel); flex-shrink: 0;
+  }
+  .chat-input {
+    flex: 1; resize: none; overflow-y: auto;
+    max-height: 120px; line-height: 1.5;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text); border-radius: var(--radius);
+    padding: 10px 12px;
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    transition: border-color var(--transition);
+  }
+  .chat-input:focus { outline: none; border-color: var(--gold); }
+  .chat-input::placeholder { color: rgba(255,255,255,0.25); }
+  .chat-send {
+    background: var(--gold); border: none;
+    border-radius: var(--radius);
+    width: 38px; height: 38px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #07090F; cursor: pointer;
+    transition: background var(--transition);
+  }
+  .chat-send:hover { background: var(--gold-light); }
+  .chat-send:disabled { opacity: 0.45; cursor: not-allowed; }
+  .message-bubble code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 5px; border-radius: 3px; font-size: 12px;
+  }
 
   /* chat area inside panel */
   .chat-intro {
@@ -518,6 +605,15 @@
 const LIFECYCLE_STAGES = ['Coming Soon','VIP Preview','Now Selling','Selling Out','Sold Out'];
 const STATUS_LABELS = { now_selling:'Now Selling', coming_soon:'Coming Soon', sold_out:'Sold Out' };
 const WHATSAPP_NUM = '14169103726';
+const DIFY_API_KEY  = 'app-BlUvrHLWXUIs95eERdRGwLp5';
+const DIFY_API_BASE = 'https://dify.talktoruchi.ca/v1';
+const CHAT_USER_ID  = (() => {
+  const k = 'dify_uid';
+  return sessionStorage.getItem(k) || (() => {
+    const id = 'v-' + Math.random().toString(36).slice(2);
+    sessionStorage.setItem(k, id); return id;
+  })();
+})();
 
 let allProjects = [];
 let activeFilter = 'all';
@@ -639,23 +735,36 @@ function buildCard(p) {
   `;
 
   card.querySelector('.btn-chat').addEventListener('click', e => {
-    e.stopPropagation(); openPanel(p, true);
+    e.stopPropagation();
+    openPanel(p, p.dify_kb_id ? 'chat-gate' : 'form');
   });
   card.querySelector('.btn-details').addEventListener('click', e => {
-    e.stopPropagation(); openPanel(p, false);
+    e.stopPropagation(); openPanel(p, 'details');
   });
-  card.addEventListener('click', () => openPanel(p, false));
+  card.addEventListener('click', () => openPanel(p, 'details'));
 
   return card;
 }
 
 // ── PANEL ─────────────────────────────────────────────────────
-function openPanel(project, showForm) {
+function openPanel(project, mode) {
   activeProject = project;
   document.getElementById('panelName').textContent = project.name;
   document.getElementById('panelBuilderLoc').textContent =
     project.builder + ' · ' + project.city;
-  buildPanelBody(project, showForm);
+
+  const panelBody = document.getElementById('panelBody');
+  if (mode === 'chat-gate') {
+    panelBody.classList.remove('chat-mode');
+    buildChatGate(project);
+  } else if (mode === 'chat') {
+    panelBody.classList.add('chat-mode');
+    buildChatBody(project);
+  } else {
+    panelBody.classList.remove('chat-mode');
+    buildPanelBody(project, mode === 'form');
+  }
+
   document.getElementById('sidePanel').classList.add('open');
   document.getElementById('panelOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -664,8 +773,227 @@ function openPanel(project, showForm) {
 function closePanel() {
   document.getElementById('sidePanel').classList.remove('open');
   document.getElementById('panelOverlay').classList.remove('open');
+  document.getElementById('panelBody').classList.remove('chat-mode');
   document.body.style.overflow = '';
   activeProject = null;
+}
+
+function buildChatGate(p) {
+  const body = document.getElementById('panelBody');
+  body.innerHTML = `
+    <div class="chat-intro" id="chatIntro">
+      <span class="chat-intro-icon">💬</span>
+      <h3>Chat about ${p.name}</h3>
+      <p>Leave your info so Ruchi can follow up, then chat live with the AI assistant about pricing, floor plans, deposits, and incentives.</p>
+      <div class="lead-form" id="leadForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" id="leadFirst" type="text" placeholder="Jane" autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" id="leadLast" type="text" placeholder="Smith" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" id="leadEmail" type="email" placeholder="jane@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" id="leadPhone" type="tel" placeholder="416-555-0100" autocomplete="tel">
+        </div>
+        <button class="form-submit" id="leadSubmit">Start Chat ✦</button>
+      </div>
+    </div>
+  `;
+
+  body.querySelector('#leadSubmit')?.addEventListener('click', () => {
+    const first = body.querySelector('#leadFirst')?.value.trim();
+    const last  = body.querySelector('#leadLast')?.value.trim();
+    const email = body.querySelector('#leadEmail')?.value.trim();
+    const phone = body.querySelector('#leadPhone')?.value.trim();
+
+    if (!first || !email) {
+      body.querySelector('#leadFirst').style.borderColor = first ? '' : 'var(--amber)';
+      body.querySelector('#leadEmail').style.borderColor = email ? '' : 'var(--amber)';
+      return;
+    }
+
+    const btn = body.querySelector('#leadSubmit');
+    btn.textContent = 'Starting chat...';
+    btn.disabled = true;
+
+    const enterChat = () => {
+      body.classList.add('chat-mode');
+      buildChatBody(p);
+    };
+
+    fetch('https://automation.talktoruchi.ca/webhook/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: first,
+        lastName: last,
+        email: email,
+        phone: phone,
+        source: 'website_chat',
+        project: p.slug,
+        message: `Started AI chat about ${p.name} (${p.city}) via talktoruchi.ca/projects`,
+        consent: true,
+        consent_version: 'v1'
+      })
+    })
+    .then(enterChat)
+    .catch(err => {
+      // Don't block chat access on a network hiccup — lead capture failing shouldn't lock the user out
+      console.error('Lead submission error:', err);
+      enterChat();
+    });
+  });
+}
+
+function buildChatBody(p) {
+  const body = document.getElementById('panelBody');
+  body.innerHTML = `
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-welcome">
+          <span class="chat-welcome-icon">💬</span>
+          Ask me anything about <strong>${p.name}</strong> —<br>pricing, floor plans, deposits, or incentives.
+        </div>
+      </div>
+      <div class="chat-input-area">
+        <textarea class="chat-input" id="chatInput" placeholder="Ask about this project…" rows="1"></textarea>
+        <button class="chat-send" id="chatSend" aria-label="Send">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+        </button>
+      </div>
+    </div>
+  `;
+
+  let conversationId = '';
+  const msgsEl  = body.querySelector('#chatMessages');
+  const inputEl = body.querySelector('#chatInput');
+  const sendBtn = body.querySelector('#chatSend');
+
+  function appendMsg(role, html, typing = false) {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-message ' + role;
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble' + (typing ? ' typing' : '');
+    bubble.innerHTML = html;
+    wrap.appendChild(bubble);
+    msgsEl.appendChild(wrap);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    return bubble;
+  }
+
+  async function send() {
+    const query = inputEl.value.trim();
+    if (!query || sendBtn.disabled) return;
+
+    inputEl.value = '';
+    inputEl.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    appendMsg('user', escapeHtml(query));
+
+    const typingBubble = appendMsg('assistant',
+      '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>',
+      true
+    );
+
+    try {
+      const res = await fetch(`${DIFY_API_BASE}/chat-messages`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${DIFY_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          inputs: { selected_project: p.name, dify_kb_id: p.dify_kb_id || '' },
+          query,
+          response_mode: 'streaming',
+          conversation_id: conversationId,
+          user: CHAT_USER_ID
+        })
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const reader  = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '', answer = '';
+
+      // Replace typing indicator with a real bubble
+      typingBubble.classList.remove('typing');
+      typingBubble.innerHTML = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+
+        const lines = buf.split('\n');
+        buf = lines.pop();
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const raw = line.slice(6).trim();
+          if (raw === '[DONE]') continue;
+          try {
+            const evt = JSON.parse(raw);
+            if (evt.conversation_id) conversationId = evt.conversation_id;
+            if (evt.event === 'message' && evt.answer) {
+              answer += evt.answer;
+              typingBubble.innerHTML = formatAnswer(answer);
+              msgsEl.scrollTop = msgsEl.scrollHeight;
+            }
+            if (evt.event === 'workflow_finished' && evt.data && evt.data.status !== 'succeeded') {
+              answer = "I don't have that detail right now — reach Ruchi on WhatsApp: https://wa.me/" + WHATSAPP_NUM;
+              typingBubble.innerHTML = formatAnswer(answer);
+              msgsEl.scrollTop = msgsEl.scrollHeight;
+              console.error('Dify workflow failed:', evt.data.error);
+            }
+          } catch {}
+        }
+      }
+
+      if (!answer) {
+        typingBubble.innerHTML = "I don't have that detail right now — reach Ruchi on WhatsApp: https://wa.me/" + WHATSAPP_NUM;
+      }
+    } catch (err) {
+      typingBubble.classList.remove('typing');
+      typingBubble.innerHTML = 'Sorry, something went wrong. Please try again.';
+      console.error('Dify chat error:', err);
+    }
+
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+
+  sendBtn.addEventListener('click', send);
+  inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  inputEl.addEventListener('input', () => {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+  });
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function formatAnswer(text) {
+  return escapeHtml(text)
+    .replace(/\*\*(.*?)\*\*/gs, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/gs,     '<em>$1</em>')
+    .replace(/`(.*?)`/g,        '<code>$1</code>')
+    .replace(/\n/g,             '<br>');
 }
 
 function buildPanelBody(p, showForm) {
