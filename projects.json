@@ -1,4 +1,4 @@
-{
+
   "updated": "2026-07-10",
   "projects": [
     {
@@ -164,6 +164,48 @@
         "null",
         "GTA"
       ]
+    },
+    {
+      "slug": "cachet-day-event",
+      "name": "Cachet Day",
+      "subtitle": "One-Day-Only Event · July 11, 2026",
+      "builder": "Cachet Homes",
+      "address": "Multiple New Home Centres",
+      "city": "Hamilton, Brantford, Stratford, Woodstock & Erin",
+      "region": "Southwestern Ontario",
+      "status": "now_selling",
+      "price_from": "$481,407*",
+      "price_to": null,
+      "deposit": "Contact Ruchi for details",
+      "deposit_note": null,
+      "sqft_from": null,
+      "sqft_to": null,
+      "bedrooms": null,
+      "incentives": [
+        "Zero closing costs",
+        "Zero development charge increases",
+        "Zero lot premiums",
+        "Special surprise bonuses"
+      ],
+      "common_fees_from": null,
+      "phase": "Limited-Time Event",
+      "vip_available": true,
+      "dify_kb_id": null,
+      "lifecycle_stage": 1,
+      "sales_contact": "Ruchi Bedi",
+      "sales_email": "ruchi@ruchibedi.com",
+      "sales_phone": "416-910-3726",
+      "office_hours": "Contact Ruchi directly to book",
+      "tags": [
+        "Cachet Homes",
+        "Hamilton",
+        "Brantford",
+        "Stratford",
+        "Woodstock",
+        "Erin",
+        "Limited-Time Event"
+      ],
+      "note": "*Price after rebates. Contact Ruchi Bedi for full incentive details and availability by community."
     }
   ]
 }
