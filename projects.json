@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-08",
+  "updated": "2026-07-10",
   "projects": [
     {
       "slug": "reva-westfield",
@@ -132,6 +132,37 @@
       "tags": [
         "Caivan",
         "Mississauga (Between Cawthra Rd. + Dixie Rd.)"
+      ]
+    },
+    {
+      "slug": "bellarc",
+      "name": "BELLARC",
+      "subtitle": "New Development",
+      "builder": "null",
+      "address": "null",
+      "city": "GTA",
+      "region": "GTA",
+      "status": "coming_soon",
+      "price_from": "TBA",
+      "price_to": null,
+      "deposit": "TBA",
+      "deposit_note": null,
+      "sqft_from": null,
+      "sqft_to": null,
+      "bedrooms": "TBA",
+      "incentives": [],
+      "common_fees_from": null,
+      "phase": "Coming Soon",
+      "vip_available": true,
+      "dify_kb_id": "d6bac1be-d917-4bbd-98c9-30d8c8bc84a3",
+      "lifecycle_stage": 1,
+      "sales_contact": null,
+      "sales_email": null,
+      "sales_phone": null,
+      "office_hours": "null",
+      "tags": [
+        "null",
+        "GTA"
       ]
     }
   ]
