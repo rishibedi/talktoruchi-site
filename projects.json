@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-10",
+  "updated": "2026-07-14",
   "projects": [
     {
       "slug": "reva-westfield",
@@ -135,17 +135,17 @@
       ]
     },
     {
-      "slug": "bellarc",
-      "name": "BELLARC",
-      "subtitle": "New Development",
-      "builder": "null",
-      "address": "null",
-      "city": "GTA",
+      "slug": "bellaro-at-palmetto",
+      "name": "Bellaro at Palmetto",
+      "subtitle": "Urban Townhomes",
+      "builder": "Treasure Hill",
+      "address": "Grandview Street North & Britannia Avenue East",
+      "city": "Oshawa",
       "region": "GTA",
       "status": "coming_soon",
-      "price_from": "TBA",
-      "price_to": null,
-      "deposit": "TBA",
+      "price_from": "$599,900",
+      "price_to": "$739,900",
+      "deposit": "$50,000",
       "deposit_note": null,
       "sqft_from": null,
       "sqft_to": null,
