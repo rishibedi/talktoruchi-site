@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-14",
+  "updated": "2026-08-11",
   "projects": [
     {
       "slug": "reva-westfield",
@@ -204,6 +204,43 @@
         "Woodstock",
         "Erin",
         "Limited-Time Event"
+      ]
+    },
+    {
+      "slug": "rosemont-grove",
+      "name": "Rosemont Grove",
+      "subtitle": "38' & 41' Signature Detached Homes",
+      "builder": "Hallett Homes",
+      "address": "Heritage Road & Steeles Avenue West",
+      "city": "Brampton",
+      "region": "Peel Region",
+      "status": "now_selling",
+      "price_from": "$1.099M",
+      "price_to": null,
+      "deposit": "TBA",
+      "deposit_note": null,
+      "sqft_from": null,
+      "sqft_to": null,
+      "bedrooms": "TBA",
+      "incentives": [
+        "100+ Foot Lots",
+        "Protected Greenspace Lots",
+        "Grand Double Door Entry"
+      ],
+      "common_fees_from": null,
+      "phase": "Now Selling",
+      "vip_available": true,
+      "dify_kb_id": "45ed9652-ce91-4768-8999-86d068067799",
+      "lifecycle_stage": 3,
+      "sales_contact": "Ruchi Bedi",
+      "sales_email": "gtaconnect.realestate@gmail.com",
+      "sales_phone": null,
+      "office_hours": "Contact Ruchi directly to book",
+      "tags": [
+        "Detached",
+        "Hallett Homes",
+        "Brampton",
+        "Pre-Construction"
       ]
     }
   ]
