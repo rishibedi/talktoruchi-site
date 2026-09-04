@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-11",
+  "updated": "2026-09-04",
   "projects": [
     {
       "slug": "reva-westfield",
@@ -204,6 +204,43 @@
         "Woodstock",
         "Erin",
         "Limited-Time Event"
+      ]
+    },
+    {
+      "slug": "five-oaks",
+      "name": "Five Oaks",
+      "subtitle": "Towns & Detached Homes on Sixteen Mile Creek",
+      "builder": "Caivan Communities",
+      "address": "1303 Dundas Street West",
+      "city": "Oakville",
+      "region": "Halton Region",
+      "status": "coming_soon",
+      "price_from": "TBA",
+      "price_to": null,
+      "deposit": "TBA",
+      "deposit_note": null,
+      "sqft_from": null,
+      "sqft_to": null,
+      "bedrooms": "TBA",
+      "incentives": [
+        "Platinum VIP Access Before Public Release"
+      ],
+      "common_fees_from": null,
+      "phase": "Coming Soon",
+      "vip_available": true,
+      "dify_kb_id": null,
+      "lifecycle_stage": 1,
+      "sales_contact": "Ruchi Bedi",
+      "sales_email": "ruchi@ruchibedi.com",
+      "sales_phone": "416-910-3726",
+      "office_hours": "Contact Ruchi directly to book",
+      "tags": [
+        "Caivan",
+        "Oakville",
+        "Townhomes",
+        "Detached",
+        "Freehold",
+        "Pre-Construction"
       ]
     },
     {

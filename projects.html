@@ -840,7 +840,8 @@ function buildChatGate(p) {
         phone: phone,
         source: 'website_chat',
         project: p.slug,
-        message: `Started AI chat about ${p.name} (${p.city}) via talktoruchi.ca/projects`,
+        projectName: p.name,
+        message: `[${p.name} — ${p.city}] Started AI chat via talktoruchi.ca/projects`,
         consent: true,
         consent_version: 'v1'
       })
@@ -1113,7 +1114,8 @@ function buildPanelBody(p, showForm) {
         phone: phone,
         source: 'website',
         project: p.slug,
-        message: `Interested in ${p.name} (${p.city}) via talktoruchi.ca/projects`,
+        projectName: p.name,
+        message: `[${p.name} — ${p.city}] VIP registration via talktoruchi.ca/projects`,
         consent: true,
         consent_version: 'v1'
       })
