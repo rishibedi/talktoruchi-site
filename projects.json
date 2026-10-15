@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-04",
+  "updated": "2026-10-15",
   "projects": [
     {
       "slug": "reva-westfield",
@@ -215,21 +215,24 @@
       "city": "Oakville",
       "region": "Halton Region",
       "status": "coming_soon",
-      "price_from": "TBA",
-      "price_to": null,
-      "deposit": "TBA",
-      "deposit_note": null,
-      "sqft_from": null,
-      "sqft_to": null,
-      "bedrooms": "TBA",
+      "price_from": "$799,106*",
+      "price_to": "$2,257,990*",
+      "deposit": "Contact Ruchi for details",
+      "deposit_note": "*Grand Opening pricing after eligible rebates & bonus — confirm current figures with Ruchi",
+      "sqft_from": 1388,
+      "sqft_to": 5170,
+      "bedrooms": "3–6 (opt. 8)",
       "incentives": [
-        "Platinum VIP Access Before Public Release"
+        "Grand Opening Weekend — Oct 24–25",
+        "Up to $120,000 Cash Off Singles",
+        "Up to $80,000 Cash Off Towns",
+        "Design Studio Credit + Free Assignments"
       ],
       "common_fees_from": null,
-      "phase": "Coming Soon",
+      "phase": "Grand Opening — Oct 24–25, 2026",
       "vip_available": true,
       "dify_kb_id": null,
-      "lifecycle_stage": 1,
+      "lifecycle_stage": 2,
       "sales_contact": "Ruchi Bedi",
       "sales_email": "ruchi@ruchibedi.com",
       "sales_phone": "416-910-3726",
